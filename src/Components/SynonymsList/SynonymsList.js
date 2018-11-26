@@ -6,12 +6,14 @@ import './SynonymsList.css';
 class SynonymsList extends Component {
     static propTypes = {
         synonyms: PropTypes.array,
-        isLoading: PropTypes.bool
+        isLoading: PropTypes.bool,
+        onSelectWord: PropTypes.func
     };
 
     handleSelectWord = (e) => {
         e.preventDefault();
         document.execCommand('insertText', false, e.currentTarget.textContent);
+        this.props.onSelectWord(e.currentTarget.textContent);
     };
 
     render() {
