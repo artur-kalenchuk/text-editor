@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import './App.css';
 import EditableContent from './Components/EditableContent/EditableContent';
 import EditButton from './Components/EditButton/EditButton';
 import SynonymsList from './Components/SynonymsList/SynonymsList';
 import {default as synonyms} from './Store/synonyms/action';
 
-class App extends Component {
+export class App extends Component {
+    static propTypes = {
+        getSynonyms: PropTypes.func
+    };
     handleSelection = (text) => {
         const {getSynonyms} = this.props;
         getSynonyms(text);
     };
     render() {
-        const {synonyms} = this.props;
-        console.log(synonyms);
         return (
-          <div className="App">
-            <EditButton command={EditButton.ALLOWED_COMMANDS.BOLD} name="B" />
-            <EditableContent
-                html="test text"
-                onSelect={this.handleSelection}
-            />
-            <SynonymsList />
-          </div>
+            <div className="App">
+                <div className="editor-container">
+                    <div className="top-panel">
+                          <EditButton command={EditButton.ALLOWED_COMMANDS.BOLD} name="B" />
+                          <EditButton command={EditButton.ALLOWED_COMMANDS.ITALIC} name="I" />
+                          <EditButton command={EditButton.ALLOWED_COMMANDS.UNDERLINE} name="_" />
+                    </div>
+                    <EditableContent
+                        html="You can type here whatever you want"
+                        onSelect={this.handleSelection}
+                    />
+                </div>
+                <SynonymsList />
+            </div>
         );
     }
 }

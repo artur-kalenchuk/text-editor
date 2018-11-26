@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import './SynonymsList.css';
 
 class SynonymsList extends Component {
     static propTypes = {
-        synonyms: PropTypes.object
+        synonyms: PropTypes.array,
+        isLoading: PropTypes.bool
     };
 
     handleSelectWord = (e, word) => {
         e.preventDefault();
-        document.execCommand('insertText', false, word); // Send the command to the browser
+        document.execCommand('insertText', false, word);
     };
 
     render() {
-        const {synonyms} = this.props;
+        const {synonyms, isLoading} = this.props;
         return (
-            <ul>
-                {synonyms.data.map(({word, score}) => (
-                        <li onMouseDown={(e) => this.handleSelectWord(e, word)} key={word}>{word}</li>
-                    )
-                )}
-            </ul>
+            <div className="synonyms-list">
+                <h4>Synonyms list</h4>
+                {!isLoading && synonyms.length > 0 &&
+                    <ul>
+                        {synonyms.map(({word, score}) => (
+                                <li onMouseDown={(e) => this.handleSelectWord(e, word)} key={word}>{word}</li>
+                            )
+                        )}
+                    </ul>
+                }
+                {
+                    isLoading && <p>Loading...</p>
+                }
+            </div>
+
         );
     }
 }
 
 const mapStateToProps = ({synonyms}) => {
     return {
-        synonyms
+        synonyms: synonyms.data,
+        isLoading: synonyms.loading
     };
 };
 

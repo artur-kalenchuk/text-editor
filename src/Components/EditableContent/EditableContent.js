@@ -1,30 +1,31 @@
-import React, { Component } from 'react';
-import Highlightable from 'highlightable';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class EditableContent extends Component {
+import './EditableContent.css';
 
-    handleSelect = (e) => {
+//TODO: Need to add sanitize for html!
+
+const EditableContent = ({html, onSelect}) => {
+    const handleSelect = () => {
         const selection = document.getSelection();
-        this.props.onSelect(selection.toString());
+        const selectionText = selection.toString();
+        if (selectionText !== '') {
+            onSelect(selectionText);
+        }
     };
+    return (
+        <div
+            className="editable-block"
+            contentEditable={true}
+            onSelect={handleSelect}
+            dangerouslySetInnerHTML={{__html: html}}
+        />
+    );
+};
 
-    render() {
-        const {html} = this.props;
-        return (
-            <div
-                className="editable-block"
-                contentEditable={true}
-                onSelect={this.handleSelect}
-                dangerouslySetInnerHTML={{__html: html}}
-            >
-                {/*<Highlightable*/}
-                    {/*ranges={this.state.ranges}*/}
-                    {/*text={html}*/}
-                    {/*onTextHighlighted={this.handleSelect}*/}
-                {/*/>*/}
-            </div>
-        );
-    }
-}
+EditableContent.propTypes = {
+    html: PropTypes.string,
+    onSelect: PropTypes.func
+};
 
 export default EditableContent;

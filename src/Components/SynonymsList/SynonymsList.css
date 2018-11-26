@@ -1,0 +1,25 @@
+.synonyms-list {
+    padding: 10px;
+    border: 1px solid #7f7f7f;
+    margin: 0 0 0 10px;
+    width: 20%;
+    list-style: inside;
+}
+
+.synonyms-list h4 {
+    margin: 0 0 10px 0;
+}
+
+.synonyms-list ul {
+    margin: 0;
+    padding: 0 0 0 10px;
+    list-style: inside;
+}
+
+.synonyms-list li {
+    cursor: pointer;
+}
+
+.synonyms-list li:hover {
+    text-decoration: underline;
+}
