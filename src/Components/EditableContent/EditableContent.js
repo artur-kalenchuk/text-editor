@@ -9,9 +9,7 @@ const EditableContent = ({html, onSelect}) => {
     const handleSelect = () => {
         const selection = document.getSelection();
         const selectionText = selection.toString();
-        if (selectionText !== '') {
-            onSelect(selectionText);
-        }
+        onSelect(selectionText);
     };
     return (
         <div

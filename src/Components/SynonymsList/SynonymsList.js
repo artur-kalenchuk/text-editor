@@ -9,9 +9,9 @@ class SynonymsList extends Component {
         isLoading: PropTypes.bool
     };
 
-    handleSelectWord = (e, word) => {
+    handleSelectWord = (e) => {
         e.preventDefault();
-        document.execCommand('insertText', false, word);
+        document.execCommand('insertText', false, e.currentTarget.textContent);
     };
 
     render() {
@@ -22,7 +22,7 @@ class SynonymsList extends Component {
                 {!isLoading && synonyms.length > 0 &&
                     <ul>
                         {synonyms.map(({word, score}) => (
-                                <li onMouseDown={(e) => this.handleSelectWord(e, word)} key={word}>{word}</li>
+                                <li onMouseDown={this.handleSelectWord} key={word}>{word}</li>
                             )
                         )}
                     </ul>

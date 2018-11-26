@@ -35,15 +35,20 @@ const get = (word) => {
             cache: 'no-cache',
             mode: 'cors'
         };
-        try {
-            const response = await fetch(`${synonymsApi}${word}`, params);
-            console.log(response);
-            const responseResult = await processResult(response);
-            dispatch(setCurrent(responseResult.slice(0, 10)));
-        } catch (e) {
-            dispatch(setCurrentLoading(false));
+        if (word !== '') {
+            try {
+                const response = await fetch(`${synonymsApi}${word}`, params);
+                const responseResult = await processResult(response);
+                dispatch(setCurrent(responseResult.slice(0, 10)));
+            } catch (e) {
+                dispatch(setCurrentLoading(false));
+            }
+            return responseResult;
         }
-        return responseResult;
+        // When word is empty string need to set empty list of synonyms
+        dispatch(setCurrent([]));
+        // Action should always return promise.
+        return Promise.resolve([])
     };
 };
 

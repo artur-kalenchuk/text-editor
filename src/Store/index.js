@@ -5,7 +5,7 @@ import {default as synonyms} from './synonyms/reducer';
 const rootReducer = combineReducers({
     synonyms
 });
-
+// Create store
 const configureStore = (initialState = {}) => {
     return createStore(
         rootReducer,
